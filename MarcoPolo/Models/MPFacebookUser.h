@@ -13,9 +13,11 @@
 
 @interface MPFacebookUser : NSObject
 
-@property (nonatomic, copy, readonly) NSString *name;
-@property (nonatomic, strong) MPLocation *currentLocation;
+@property (nonatomic, copy,   readonly) NSString *name;
 @property (nonatomic, strong, readonly) NSURL *profilePictureURL;
+
+@property (nonatomic, strong)           MPLocation *currentLocation;
+
 
 - (instancetype)initWithFBGraphUser:(FBGraphObject *)graphUser;
 

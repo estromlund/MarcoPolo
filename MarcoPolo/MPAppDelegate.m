@@ -20,7 +20,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
     MPFriendsListViewController *friendsListViewController = [[MPFriendsListViewController alloc] init];
@@ -35,8 +34,7 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
-    BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
-    return wasHandled;
+    return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
 }
 
 @end

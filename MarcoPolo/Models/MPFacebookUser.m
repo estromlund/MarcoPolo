@@ -14,6 +14,11 @@
 // Facebook SDK
 #import <FacebookSDK/FBGraphObject.h>
 
+
+static NSString * const MP_FBGraphUserNameKey = @"name";
+static NSString * const MP_FBGraphUserProfilePhotoKey = @"pic_square";
+
+
 @interface MPFacebookUser ()
 
 @property (nonatomic, copy) NSString *name;
@@ -28,18 +33,12 @@
 {
     self = [super init];
     if (self) {
-        if (graphUser[@"name"]) {
-            self.name = graphUser[@"name"];
+        if (graphUser[MP_FBGraphUserNameKey]) {
+            self.name = graphUser[MP_FBGraphUserNameKey];
         }
         
-//        if (graphUser[@"location"]) {
-//            self.currentLocation = [[MPLocation alloc] initWithName:graphUser[@"location"][@"name"]
-//                                                           latitude:0
-//                                                           longitude:0];
-//        }
-        
-        if (graphUser[@"picture"]) {
-            self.profilePictureURL = [NSURL URLWithString:graphUser[@"picture"][@"data"][@"url"]];
+        if (graphUser[MP_FBGraphUserProfilePhotoKey]) {
+            self.profilePictureURL = [NSURL URLWithString:graphUser[MP_FBGraphUserProfilePhotoKey]];
         }
     }
     return self;

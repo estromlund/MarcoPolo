@@ -12,6 +12,14 @@
 #import "MPFacebookUser.h"
 #import "MPLocation.h"
 
+// Table View
+#import "MPFriendsListDataSource.h"
+#import "MPTableViewDelegate.h"
+
+// Managers
+#import "MPFacebookManager.h"
+#import "MPLocationManager.h"
+
 // Apple SDKS
 #import <CoreLocation/CLLocation.h>
 
@@ -19,36 +27,57 @@
 //
 // Facebook SDK
 #import <FacebookSDK/FBLoginView.h>
-#import <FacebookSDK/FBRequestConnection.h>
-#import <FacebookSDK/FBUtility.h>
 
 // AFNetworking
 #import <AFNetworking/UIImageView+AFNetworking.h>
 
 
-@interface MPFriendsListViewController () <FBLoginViewDelegate, UITableViewDataSource>
+@interface MPFriendsListViewController () <FBLoginViewDelegate, UITableViewDelegate, CLLocationManagerDelegate>
 
-@property (nonatomic, strong) FBLoginView *fbLoginView;
+@property (nonatomic, strong) CLLocation *currentLocation;
+
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) MPFriendsListDataSource *dataSource;
+@property (nonatomic, strong) MPTableViewDelegate *tableViewDelegate;
 
-@property (nonatomic, strong) NSArray *friendsData;
+@property (nonatomic, strong) MPFacebookManager *facebookManager;
+@property (nonatomic, strong) FBLoginView *facebookLoginView;
+@property (nonatomic, strong) NSArray *facebookResults;
 
 @end
-
-typedef void(^MPVoidBlock)(void);
 
 
 @implementation MPFriendsListViewController
 
 #pragma mark - View Lifecycle
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.dataSource = [[MPFriendsListDataSource alloc] init];
+        self.tableViewDelegate = [[MPTableViewDelegate alloc] init];
+        
+        self.facebookManager = [[MPFacebookManager alloc] init];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [self setupFBLoginView];
     [self setupTableView];
     
+    [[MPLocationManager sharedManager] getLocationWithCompletionBlock:^(CLLocation *location) {
+        self.currentLocation = location;
+        
+        if (self.facebookResults) {
+            [self updateDataSourceWithArray:self.facebookResults];
+        }
+    }];
+    
     if ([[FBSession activeSession] isOpen]) {
-        [self queryFBFriendsListForCurrentLocations];
+        [self doFacebookSearch];
         self.tableView.hidden = NO;
     } else {
         self.tableView.hidden = YES;
@@ -57,21 +86,26 @@ typedef void(^MPVoidBlock)(void);
 
 - (void)setupFBLoginView
 {
-    self.fbLoginView = [[FBLoginView alloc] init];
-    self.fbLoginView.readPermissions = @[@"friends_location"];
-    self.fbLoginView.delegate = self;
+    self.facebookLoginView = [[FBLoginView alloc] init];
+    self.facebookLoginView.readPermissions = @[@"friends_location"];
+    self.facebookLoginView.delegate = self;
     
-    self.fbLoginView.frame = CGRectOffset(self.fbLoginView.frame,
-                                          (self.view.center.x - (self.fbLoginView.frame.size.width / 2)),
-                                          (self.view.center.y - (self.fbLoginView.frame.size.height / 2)));
-    [self.view addSubview:self.fbLoginView];
+    self.facebookLoginView.frame = CGRectOffset(self.facebookLoginView.frame,
+                                          (self.view.center.x - (self.facebookLoginView.frame.size.width / 2)),
+                                          (self.view.center.y - (self.facebookLoginView.frame.size.height / 2)));
+    [self.view addSubview:self.facebookLoginView];
 }
 
 - (void)setupTableView
 {
-    CGRect tableViewFrame = CGRectInset(self.view.frame, 0, 20);
+    NSUInteger statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    CGRect tableViewFrame = CGRectMake(0,
+                                       statusBarHeight,
+                                       self.view.frame.size.width,
+                                       self.view.frame.size.height - statusBarHeight);
     self.tableView = [[UITableView alloc] initWithFrame:tableViewFrame style:UITableViewStylePlain];
-    self.tableView.dataSource = self;
+    self.tableView.dataSource = self.dataSource;
+    self.tableView.delegate = self.tableViewDelegate;
     [self.view addSubview:self.tableView];
 }
 
@@ -80,142 +114,48 @@ typedef void(^MPVoidBlock)(void);
 
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user
 {
-    [self queryFBFriendsListForCurrentLocations];
-    self.fbLoginView.hidden = YES;
+    [self doFacebookSearch];
+    self.facebookLoginView.hidden = YES;
     self.tableView.hidden = NO;
 }
 
-
-#pragma mark - <UITableViewDataSource>
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    if (section == 0) {
-        return self.friendsData.count;
-    }
-    
-    return 0;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString * const reusableCellIdentifier = @"CellIdentifier";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reusableCellIdentifier];
-    
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reusableCellIdentifier];
-    }
-    
-    MPFacebookUser *user = self.friendsData[indexPath.row];
-    cell = [self setupCell:cell forUser:user];
-    
-    return cell;
-}
-
-- (UITableViewCell *)setupCell:(UITableViewCell *)cell forUser:(MPFacebookUser *)user
-{
-    cell.textLabel.text = user.name;
-    
-    if (user.currentLocation) {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ (%f, %f)", user.currentLocation.name,
-                                     user.currentLocation.location.coordinate.latitude,
-                                     user.currentLocation.location.coordinate.longitude];
-    }
-    
-    if (user.profilePictureURL) {
-        [cell.imageView setImageWithURL:user.profilePictureURL];
-    }
-    
-    return cell;
-}
-
-
 #pragma mark - Private Methods
 
-- (void)queryFBFriendsListForCurrentLocations
+- (void)updateDataSourceWithArray:(NSArray *)dataArray
 {
-    __weak typeof(self) weakSelf = self;
-    
-    NSString *friendsQuery = @"SELECT uid, name, current_location.id FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1=me())";
-    NSString *locationsQuery = @"SELECT page_id, name, location FROM page WHERE page_id IN (SELECT current_location.id FROM #friendsQuery)";
-    
-    NSString* fqlQueryString = [NSString stringWithFormat:
-                                @"{\"friendsQuery\":\"%@\",\"locationsQuery\":\"%@\"}",friendsQuery, locationsQuery];
-    
-    
-    [FBRequestConnection startWithGraphPath:@"fql"
-                                 parameters:@{@"q": fqlQueryString}
-                                 HTTPMethod:@"GET"
-                          completionHandler:^(FBRequestConnection *connection, FBGraphObject *result, NSError *error) {
-                              [weakSelf processFBQueryData:result completion:^{
-                                  [weakSelf.tableView reloadData];
-                              }];
-                          }];
+    self.dataSource.dataArray = [self arraySortedByDistanceFromArray:dataArray];
+    [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
 
-- (void)processFBQueryData:(NSDictionary *)friendsData completion:(MPVoidBlock)completion
+- (NSArray *)arraySortedByDistanceFromArray:(NSArray *)array
 {
-    NSArray *resultData = friendsData[@"data"];
-    
-    NSArray *fbFriendsArray = nil;
-    NSArray *fbLocationsArray = nil;
-    
-    for (NSDictionary *resultDict in resultData) {
-        if ([resultDict[@"name"] isEqualToString:@"friendsQuery"]) {
-            fbFriendsArray = resultDict[@"fql_result_set"];
-        } else if ([resultDict[@"name"] isEqualToString:@"locationsQuery"]) {
-            fbLocationsArray = resultDict[@"fql_result_set"];
-        }
-    }
-    
-    NSMutableArray *fbUsersArray = [NSMutableArray array];
-    for (FBGraphObject *graphUser in fbFriendsArray) {
-        
-        // Only take users with locations
-        if (![graphUser[@"current_location"] isKindOfClass:[NSDictionary class]] ||
-            !graphUser[@"current_location"][@"id"]) {
-            continue;
-        }
-        
-        MPFacebookUser *user = [[MPFacebookUser alloc] initWithFBGraphUser:graphUser];
-        
-        // Add location if user has one
-        NSNumber *locationID = graphUser[@"current_location"][@"id"];
-        if (locationID) {
-            for (NSDictionary *dictionary in fbLocationsArray) {
-                if ([dictionary[@"page_id"] isEqualToNumber:locationID]) {
-                    MPLocation *location = [[MPLocation alloc] initWithName:dictionary[@"name"]
-                                                                   latitude:[dictionary[@"location"][@"latitude"] doubleValue]
-                                                                  longitude:[dictionary[@"location"][@"longitude"] doubleValue]];
-                    user.currentLocation = location;
-                    [fbUsersArray addObject:user];
-                    break;
-                }
+    CLLocation *currentLocation = self.currentLocation;
+    NSArray *sortedArray = [array sortedArrayWithOptions:NSSortConcurrent
+                                         usingComparator:^NSComparisonResult(MPFacebookUser *obj1, MPFacebookUser *obj2) {
+                                             CLLocation *firstLocation = obj1.currentLocation.location;
+                                             CLLocation *secondLocation = obj2.currentLocation.location;
+                                             
+                                             CLLocationDistance dist1 = [firstLocation distanceFromLocation:currentLocation];
+                                             CLLocationDistance dist2 = [secondLocation distanceFromLocation:currentLocation];
+                                             
+                                             return [@(dist1) compare:@(dist2)];
+                                         }];
+    return sortedArray;
+}
+
+- (void)doFacebookSearch
+{
+    [self.facebookManager queryFBFriendsForInfoAndLocationWithCompletion:^(NSArray *result, NSError *error) {
+        if (result) {
+            self.facebookResults = result;
+            
+            if (self.currentLocation) {
+                [self updateDataSourceWithArray:result];
             }
+        } else {
+            [UIAlertView showWithTitle:@"Error" message:error.localizedDescription];
         }
-    }
-    
-    self.friendsData = fbUsersArray;
-    
-    if (completion) {
-        completion();
-    }
-}
-
-- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message
-{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                    message:message
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil, nil];
-    [alert show];
+    }];
 }
 
 @end

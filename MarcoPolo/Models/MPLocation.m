@@ -33,11 +33,4 @@
     return self;
 }
 
-- (void)setName:(NSString *)name
-{
-    _name = name;
-    
-    
-}
-
 @end

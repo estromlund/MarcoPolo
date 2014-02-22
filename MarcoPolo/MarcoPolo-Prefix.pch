@@ -11,6 +11,16 @@
 #endif
 
 #ifdef __OBJC__
+
+    // System Frameworks
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+
+    // Typedefs
+    typedef void(^MPVoidBlock)(void);
+    typedef void(^MPResultErrorBlock)(id result, NSError *error);
+
+    // Categories
+    #import "UIAlertView+MPAdditions.h"
+
 #endif

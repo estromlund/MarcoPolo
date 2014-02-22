@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0305E4AF189B4D3000018B53 /* MPFriendsListDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0305E4AE189B4D3000018B53 /* MPFriendsListDataSource.m */; };
+		0305E4B3189B506C00018B53 /* MPFacebookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0305E4B2189B506C00018B53 /* MPFacebookManager.m */; };
+		0305E4B6189B54A000018B53 /* MPLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0305E4B5189B54A000018B53 /* MPLocationManager.m */; };
 		0317044C189A2E4700C2FEBB /* MPFriendsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0317044B189A2E4700C2FEBB /* MPFriendsListViewController.m */; };
+		0325E93B189AD39B00C80754 /* PlaceholderProfileImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 0325E939189AD39B00C80754 /* PlaceholderProfileImage.png */; };
+		0325E93C189AD39B00C80754 /* PlaceholderProfileImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0325E93A189AD39B00C80754 /* PlaceholderProfileImage@2x.png */; };
 		03829A82189A2C1B0046BDE9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03829A81189A2C1B0046BDE9 /* Foundation.framework */; };
 		03829A84189A2C1B0046BDE9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03829A83189A2C1B0046BDE9 /* CoreGraphics.framework */; };
 		03829A86189A2C1B0046BDE9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03829A85189A2C1B0046BDE9 /* UIKit.framework */; };
@@ -20,6 +25,10 @@
 		03829A9D189A2C1B0046BDE9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03829A85189A2C1B0046BDE9 /* UIKit.framework */; };
 		03829AA5189A2C1B0046BDE9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03829AA3189A2C1B0046BDE9 /* InfoPlist.strings */; };
 		03829AA7189A2C1B0046BDE9 /* MarcoPoloTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03829AA6189A2C1B0046BDE9 /* MarcoPoloTests.m */; };
+		03B438FD18B9062500691594 /* UIAlertView+MPAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B438FC18B9062500691594 /* UIAlertView+MPAdditions.m */; };
+		03B4390018B9075B00691594 /* MPTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B438FF18B9075B00691594 /* MPTableViewDelegate.m */; };
+		03B4390318B90EC400691594 /* MPTableViewArrayDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B4390218B90EC400691594 /* MPTableViewArrayDataSource.m */; };
+		03B4390718B912AC00691594 /* MPFriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B4390618B912AC00691594 /* MPFriendTableViewCell.m */; };
 		03E33077189A4660009954AC /* MPFacebookUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E33076189A4660009954AC /* MPFacebookUser.m */; };
 		03E3307A189A483F009954AC /* MPLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E33079189A483F009954AC /* MPLocation.m */; };
 		9994656BB879401A8B1A758A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B27AC52118F41F0B61F662D /* libPods.a */; };
@@ -36,8 +45,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0305E4AD189B4D2F00018B53 /* MPFriendsListDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPFriendsListDataSource.h; sourceTree = "<group>"; };
+		0305E4AE189B4D3000018B53 /* MPFriendsListDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFriendsListDataSource.m; sourceTree = "<group>"; };
+		0305E4B1189B506C00018B53 /* MPFacebookManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPFacebookManager.h; path = Managers/MPFacebookManager.h; sourceTree = "<group>"; };
+		0305E4B2189B506C00018B53 /* MPFacebookManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPFacebookManager.m; path = Managers/MPFacebookManager.m; sourceTree = "<group>"; };
+		0305E4B4189B54A000018B53 /* MPLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPLocationManager.h; path = Managers/MPLocationManager.h; sourceTree = "<group>"; };
+		0305E4B5189B54A000018B53 /* MPLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPLocationManager.m; path = Managers/MPLocationManager.m; sourceTree = "<group>"; };
 		0317044A189A2E4700C2FEBB /* MPFriendsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPFriendsListViewController.h; path = ViewControllers/MPFriendsListViewController.h; sourceTree = "<group>"; };
 		0317044B189A2E4700C2FEBB /* MPFriendsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPFriendsListViewController.m; path = ViewControllers/MPFriendsListViewController.m; sourceTree = "<group>"; };
+		0325E939189AD39B00C80754 /* PlaceholderProfileImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlaceholderProfileImage.png; sourceTree = "<group>"; };
+		0325E93A189AD39B00C80754 /* PlaceholderProfileImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PlaceholderProfileImage@2x.png"; sourceTree = "<group>"; };
 		03829A7E189A2C1B0046BDE9 /* MarcoPolo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarcoPolo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03829A81189A2C1B0046BDE9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		03829A83189A2C1B0046BDE9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -54,6 +71,14 @@
 		03829AA2189A2C1B0046BDE9 /* MarcoPoloTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MarcoPoloTests-Info.plist"; sourceTree = "<group>"; };
 		03829AA4189A2C1B0046BDE9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		03829AA6189A2C1B0046BDE9 /* MarcoPoloTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MarcoPoloTests.m; sourceTree = "<group>"; };
+		03B438FB18B9062500691594 /* UIAlertView+MPAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIAlertView+MPAdditions.h"; path = "Categories/UIAlertView+MPAdditions.h"; sourceTree = "<group>"; };
+		03B438FC18B9062500691594 /* UIAlertView+MPAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIAlertView+MPAdditions.m"; path = "Categories/UIAlertView+MPAdditions.m"; sourceTree = "<group>"; };
+		03B438FE18B9075B00691594 /* MPTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTableViewDelegate.h; sourceTree = "<group>"; };
+		03B438FF18B9075B00691594 /* MPTableViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTableViewDelegate.m; sourceTree = "<group>"; };
+		03B4390118B90EC400691594 /* MPTableViewArrayDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTableViewArrayDataSource.h; sourceTree = "<group>"; };
+		03B4390218B90EC400691594 /* MPTableViewArrayDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTableViewArrayDataSource.m; sourceTree = "<group>"; };
+		03B4390518B912AB00691594 /* MPFriendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPFriendTableViewCell.h; path = Views/MPFriendTableViewCell.h; sourceTree = "<group>"; };
+		03B4390618B912AC00691594 /* MPFriendTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPFriendTableViewCell.m; path = Views/MPFriendTableViewCell.m; sourceTree = "<group>"; };
 		03E33075189A4660009954AC /* MPFacebookUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPFacebookUser.h; path = Models/MPFacebookUser.h; sourceTree = "<group>"; };
 		03E33076189A4660009954AC /* MPFacebookUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPFacebookUser.m; path = Models/MPFacebookUser.m; sourceTree = "<group>"; };
 		03E33078189A483F009954AC /* MPLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPLocation.h; path = Models/MPLocation.h; sourceTree = "<group>"; };
@@ -87,6 +112,52 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0305E4AA189B4C9300018B53 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0325E939189AD39B00C80754 /* PlaceholderProfileImage.png */,
+				0325E93A189AD39B00C80754 /* PlaceholderProfileImage@2x.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		0305E4AB189B4C9F00018B53 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				03E33075189A4660009954AC /* MPFacebookUser.h */,
+				03E33076189A4660009954AC /* MPFacebookUser.m */,
+				03E33078189A483F009954AC /* MPLocation.h */,
+				03E33079189A483F009954AC /* MPLocation.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		0305E4AC189B4CA600018B53 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				0317044A189A2E4700C2FEBB /* MPFriendsListViewController.h */,
+				0317044B189A2E4700C2FEBB /* MPFriendsListViewController.m */,
+				03B438FE18B9075B00691594 /* MPTableViewDelegate.h */,
+				03B438FF18B9075B00691594 /* MPTableViewDelegate.m */,
+				03B4390118B90EC400691594 /* MPTableViewArrayDataSource.h */,
+				03B4390218B90EC400691594 /* MPTableViewArrayDataSource.m */,
+				0305E4AD189B4D2F00018B53 /* MPFriendsListDataSource.h */,
+				0305E4AE189B4D3000018B53 /* MPFriendsListDataSource.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		0305E4B0189B4F3200018B53 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				0305E4B1189B506C00018B53 /* MPFacebookManager.h */,
+				0305E4B2189B506C00018B53 /* MPFacebookManager.m */,
+				0305E4B4189B54A000018B53 /* MPLocationManager.h */,
+				0305E4B5189B54A000018B53 /* MPLocationManager.m */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
 		03829A75189A2C1B0046BDE9 = {
 			isa = PBXGroup;
 			children = (
@@ -122,16 +193,16 @@
 		03829A87189A2C1B0046BDE9 /* MarcoPolo */ = {
 			isa = PBXGroup;
 			children = (
-				03E33075189A4660009954AC /* MPFacebookUser.h */,
-				03E33076189A4660009954AC /* MPFacebookUser.m */,
+				03B4390418B9129400691594 /* Views */,
+				03B438FA18B905F900691594 /* Categories */,
+				0305E4B0189B4F3200018B53 /* Managers */,
+				0305E4AA189B4C9300018B53 /* Resources */,
+				0305E4AB189B4C9F00018B53 /* Models */,
 				03829A90189A2C1B0046BDE9 /* MPAppDelegate.h */,
 				03829A91189A2C1B0046BDE9 /* MPAppDelegate.m */,
-				0317044A189A2E4700C2FEBB /* MPFriendsListViewController.h */,
-				0317044B189A2E4700C2FEBB /* MPFriendsListViewController.m */,
+				0305E4AC189B4CA600018B53 /* ViewControllers */,
 				03829A93189A2C1B0046BDE9 /* Images.xcassets */,
 				03829A88189A2C1B0046BDE9 /* Supporting Files */,
-				03E33078189A483F009954AC /* MPLocation.h */,
-				03E33079189A483F009954AC /* MPLocation.m */,
 			);
 			path = MarcoPolo;
 			sourceTree = "<group>";
@@ -163,6 +234,24 @@
 				03829AA3189A2C1B0046BDE9 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		03B438FA18B905F900691594 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				03B438FB18B9062500691594 /* UIAlertView+MPAdditions.h */,
+				03B438FC18B9062500691594 /* UIAlertView+MPAdditions.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		03B4390418B9129400691594 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				03B4390518B912AB00691594 /* MPFriendTableViewCell.h */,
+				03B4390618B912AC00691594 /* MPFriendTableViewCell.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,6 +332,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0325E93B189AD39B00C80754 /* PlaceholderProfileImage.png in Resources */,
+				0325E93C189AD39B00C80754 /* PlaceholderProfileImage@2x.png in Resources */,
 				03829A8C189A2C1B0046BDE9 /* InfoPlist.strings in Resources */,
 				03829A94189A2C1B0046BDE9 /* Images.xcassets in Resources */,
 			);
@@ -297,10 +388,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				03E3307A189A483F009954AC /* MPLocation.m in Sources */,
+				03B438FD18B9062500691594 /* UIAlertView+MPAdditions.m in Sources */,
+				0305E4B3189B506C00018B53 /* MPFacebookManager.m in Sources */,
+				0305E4AF189B4D3000018B53 /* MPFriendsListDataSource.m in Sources */,
+				03B4390318B90EC400691594 /* MPTableViewArrayDataSource.m in Sources */,
 				0317044C189A2E4700C2FEBB /* MPFriendsListViewController.m in Sources */,
+				03B4390018B9075B00691594 /* MPTableViewDelegate.m in Sources */,
 				03E33077189A4660009954AC /* MPFacebookUser.m in Sources */,
 				03829A8E189A2C1B0046BDE9 /* main.m in Sources */,
 				03829A92189A2C1B0046BDE9 /* MPAppDelegate.m in Sources */,
+				03B4390718B912AC00691594 /* MPFriendTableViewCell.m in Sources */,
+				0305E4B6189B54A000018B53 /* MPLocationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
