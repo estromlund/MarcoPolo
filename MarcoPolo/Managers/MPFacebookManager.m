@@ -22,15 +22,13 @@
 
 - (void)queryFBFriendsForInfoAndLocationWithCompletion:(MPResultErrorBlock)completion
 {
-    __weak typeof(self) weakSelf = self;
-    
     NSString *friendsQuery = @"SELECT uid, name, pic_square, current_location.id FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1=me())";
     NSString *locationsQuery = @"SELECT page_id, name, location FROM page WHERE page_id IN (SELECT current_location.id FROM #friendsQuery)";
     
     NSString* fqlQueryString = [NSString stringWithFormat:
                                 @"{\"friendsQuery\":\"%@\",\"locationsQuery\":\"%@\"}",friendsQuery, locationsQuery];
     
-    
+    __weak typeof(self) weakSelf = self;
     [FBRequestConnection startWithGraphPath:@"fql"
                                  parameters:@{@"q": fqlQueryString}
                                  HTTPMethod:@"GET"
