@@ -11,7 +11,10 @@
 // Apple SDK
 #import <CoreLocation/CLLocation.h>
 
+
+// Typedefs
 typedef void(^MPLocationResultCompletionBlock)(CLLocation *location);
+
 
 @interface MPLocationManager : NSObject
 

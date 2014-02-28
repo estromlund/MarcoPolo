@@ -71,6 +71,8 @@
     [[MPLocationManager sharedManager] getLocationWithCompletionBlock:^(CLLocation *location) {
         self.currentLocation = location;
         
+        // We may or may not have facebook results at this point
+        // If we do not, then the facebook completion handler will take care of finishing this
         if (self.facebookResults) {
             [self updateDataSourceWithArray:self.facebookResults];
         }
@@ -149,6 +151,8 @@
         if (result) {
             self.facebookResults = result;
             
+            // We may or may not have a current location at this point
+            // If we do not, then the location completion handler will take care of finishing this
             if (self.currentLocation) {
                 [self updateDataSourceWithArray:result];
             }

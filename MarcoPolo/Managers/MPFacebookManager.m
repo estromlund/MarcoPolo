@@ -18,6 +18,7 @@
 #import <FacebookSDK/FBRequestConnection.h>
 #import <FacebookSDK/FBUtility.h>
 
+
 @implementation MPFacebookManager
 
 - (void)queryFBFriendsForInfoAndLocationWithCompletion:(MPResultErrorBlock)completion
